@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Tập 2 - Thông Tin Sản Phẩm</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+        }
+        .product-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+        .product-header h2 {
+            color: #667eea;
+            font-weight: bold;
+        }
+        .product-info {
+            display: grid;
+            gap: 20px;
+        }
+        .info-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+        }
+        .info-item label {
+            color: #667eea;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .info-item .value {
+            color: #333;
+            font-size: 18px;
+        }
+        .price-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .image-container img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+            object-fit: cover;
+        }
+        .no-image {
+            background: #e9ecef;
+            padding: 80px 20px;
+            border-radius: 10px;
+            color: #999;
+            font-size: 16px;
+        }
+        .button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .btn-custom {
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-add-cart {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+        }
+        .btn-add-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+        .btn-skip {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            color: white;
+        }
+        .btn-skip:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #999;
+            font-size: 12px;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #667eea;
+        }
+        .spinner-border {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="product-header">
+            <h2>🎮 Thông Tin Sản Phẩm</h2>
+        </div>
+
+        <div class="image-container" id="imageContainer">
+            <div class="loading">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p>Đang tải ảnh...</p>
+            </div>
+        </div>
+
+        <div class="product-info">
+            <div class="info-item">
+                <label>Tên Sản Phẩm</label>
+                <div class="value">acc game NTH</div>
+            </div>
+
+            <div class="price-badge">
+                💰 25,000,000 VND
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button class="btn-custom btn-add-cart" onclick="addToCart()">
+                🛒 Thêm vào giỏ hàng
+            </button>
+            <button class="btn-custom btn-skip" onclick="skipProduct()">
+                ❌ Bỏ qua
+            </button>
+        </div>
+
+        <div class="footer">
+            <p>© 2026 - Bài Tập Quản Lý Sản Phẩm</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Load random image on page load
+        window.addEventListener('load', loadRandomImage);
+
+        function loadRandomImage() {
+            fetch('/api/random-image')
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById('imageContainer');
+                    if (data.image) {
+                        const img = document.createElement('img');
+                        img.src = `/image/${encodeURIComponent(data.image)}`;
+                        img.alt = 'acc game NTH';
+                        img.onerror = () => {
+                            container.innerHTML = '<div class="no-image">🖼️ Không thể tải ảnh</div>';
+                        };
+                        container.innerHTML = '';
+                        container.appendChild(img);
+                    } else {
+                        container.innerHTML = '<div class="no-image">📂 Không tìm thấy ảnh trong thư mục</div>';
+                    }
+                })
+                .catch(err => {
+                    console.error('Error loading image:', err);
+                    document.getElementById('imageContainer').innerHTML = '<div class="no-image">❌ Lỗi tải ảnh</div>';
+                });
+        }
+
+        function addToCart() {
+            alert('✅ Đã thêm "acc game NTH" vào giỏ hàng!');
+        }
+
+        function skipProduct() {
+            alert('⏭️ Bỏ qua sản phẩm');
+            // Có thể tải sản phẩm tiếp theo tại đây
+            loadRandomImage();
+        }
+    </script>
+</body>
+</html>

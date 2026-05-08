@@ -1,0 +1,70 @@
+@model web.Models.SanPhamViewModel1
+
+@{
+    ViewBag.Title = "Bài Tập 2 - Hiển Thị Sản Phẩm";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Thông Tin Sản Phẩm</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-4 text-center">
+                            @if (!string.IsNullOrEmpty(Model.AnhMoTa))
+                            {
+                                <img src="~/Images/@Model.AnhMoTa" alt="@Model.TenSanPham" 
+                                     class="img-fluid rounded" style="max-height: 300px; object-fit: cover;">
+                            }
+                            else
+                            {
+                                <div class="alert alert-secondary" style="height: 300px; display: flex; align-items: center; justify-content: center;">
+                                    <span>Không có ảnh</span>
+                                </div>
+                            }
+                        </div>
+                        <div class="col-md-8">
+                            <h4 class="text-success mb-3">
+                                <strong>Tên Sản Phẩm:</strong>
+                            </h4>
+                            <p class="lead">@Model.TenSanPham</p>
+
+                            <h4 class="text-danger mb-3 mt-4">
+                                <strong>Giá Bán:</strong>
+                            </h4>
+                            <p class="lead">
+                                <span class="badge badge-warning" style="font-size: 1.2rem;">
+                                    @Model.GiaBan.ToString("N0") VND
+                                </span>
+                            </p>
+
+                            <h4 class="text-info mb-3 mt-4">
+                                <strong>Ảnh Mô Tả:</strong>
+                            </h4>
+                            <p>@Model.AnhMoTa</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted">
+                    <small>© 2026 - Bài Tập Quản Lý Sản Phẩm</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f5f5f5;
+    }
+    .card {
+        border: none;
+        border-radius: 10px;
+    }
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+    }
+</style>
