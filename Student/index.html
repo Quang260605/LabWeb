@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký Chuyên Ngành - Khoa CNTT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 560px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header .logo {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.4rem;
+        }
+
+        .subtitle {
+            color: #a78bfa;
+            font-size: 0.9rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            backdrop-filter: blur(24px);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-group {
+            margin-bottom: 1.3rem;
+        }
+
+        label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 0.88rem;
+            font-weight: 500;
+            margin-bottom: 0.45rem;
+        }
+
+        label span.required {
+            color: #f87171;
+            margin-left: 2px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 0.7rem 1rem;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: border-color 0.25s, background 0.25s, box-shadow 0.25s;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            border-color: #8b5cf6;
+            background: rgba(139, 92, 246, 0.12);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
+        }
+
+        select option {
+            background: #1e1b4b;
+            color: #fff;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: '▾';
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a78bfa;
+            pointer-events: none;
+            font-size: 1rem;
+        }
+
+        .majors-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem;
+        }
+
+        .major-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .major-option:hover {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        .major-option input[type="radio"] {
+            width: auto;
+            accent-color: #8b5cf6;
+            cursor: pointer;
+        }
+
+        .major-option label {
+            margin: 0;
+            cursor: pointer;
+            font-size: 0.88rem;
+            color: #e2e8f0;
+            font-weight: 500;
+        }
+
+        .major-option:has(input:checked) {
+            background: rgba(139, 92, 246, 0.2);
+            border-color: #8b5cf6;
+            box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.2);
+        }
+
+        .major-option:has(input:checked) label {
+            color: #c4b5fd;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            margin: 1.5rem 0;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 0.85rem;
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.45);
+            letter-spacing: 0.3px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(124, 58, 237, 0.65);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .info-tip {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .majors-grid { grid-template-columns: 1fr; }
+            .card { padding: 1.8rem 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo">🎓</div>
+        <h1>Đăng Ký Chuyên Ngành</h1>
+        <p class="subtitle">Khoa Công Nghệ Thông Tin — Năm học 2025–2026</p>
+    </div>
+
+    <div class="card">
+        <form id="formDangKy" action="/Student/ShowKQ" method="post">
+
+            <div class="form-group">
+                <label for="mssv">MSSV <span class="required">*</span></label>
+                <input type="text" id="mssv" name="mssv" placeholder="VD: 2051050001" required>
+            </div>
+
+            <div class="form-group">
+                <label for="hoten">Họ và Tên <span class="required">*</span></label>
+                <input type="text" id="hoten" name="hoten" placeholder="VD: Nguyễn Văn An" required>
+            </div>
+
+            <div class="form-group">
+                <label for="diemtb">Điểm Trung Bình <span class="required">*</span></label>
+                <input type="number" id="diemtb" name="diemtb"
+                       placeholder="VD: 7.5" step="0.1" min="0" max="10" required>
+            </div>
+
+            <div class="form-group">
+                <label>Chuyên Ngành <span class="required">*</span></label>
+                <div class="majors-grid">
+                    <div class="major-option">
+                        <input type="radio" id="cnpm" name="chuyennganh" value="CNPM" required>
+                        <label for="cnpm">💻 CNPM</label>
+                    </div>
+                    <div class="major-option">
+                        <input type="radio" id="httt" name="chuyennganh" value="HTTT">
+                        <label for="httt">🖧 HTTT</label>
+                    </div>
+                    <div class="major-option">
+                        <input type="radio" id="anm" name="chuyennganh" value="ANM">
+                        <label for="anm">🔒 ANM</label>
+                    </div>
+                    <div class="major-option">
+                        <input type="radio" id="ttnt" name="chuyennganh" value="TTNT">
+                        <label for="ttnt">🤖 TTNT</label>
+                    </div>
+                    <div class="major-option" style="grid-column: span 2;">
+                        <input type="radio" id="mmt" name="chuyennganh" value="MMT">
+                        <label for="mmt">📡 MMT</label>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <button type="submit" class="btn-submit" id="btnDangKy">
+                ✅ Đăng Ký
+            </button>
+        </form>
+
+        <p class="info-tip">Khoa CNTT sẽ ghi nhận số lượng đăng ký theo từng chuyên ngành</p>
+    </div>
+</div>
+</body>
+</html>

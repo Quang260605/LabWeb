@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết Quả Đăng Ký Chuyên Ngành</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 580px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            backdrop-filter: blur(24px);
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.88) translateY(24px); }
+            to   { opacity: 1; transform: scale(1)    translateY(0); }
+        }
+
+        .success-icon {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            display: block;
+            animation: bounceIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+        }
+
+        @keyframes bounceIn {
+            from { transform: scale(0.3); opacity: 0; }
+            to   { transform: scale(1);   opacity: 1; }
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .result-msg {
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.12), rgba(34, 197, 94, 0.06));
+            border: 1.5px solid rgba(74, 222, 128, 0.4);
+            border-radius: 16px;
+            padding: 1.2rem 1.5rem;
+            color: #4ade80;
+            font-size: 1.05rem;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .result-msg .highlight {
+            color: #86efac;
+            font-weight: 700;
+        }
+
+        .count-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(109, 40, 217, 0.08));
+            border: 1.5px solid rgba(139, 92, 246, 0.4);
+            border-radius: 16px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .count-box .count-label {
+            color: #a78bfa;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 0.4rem;
+        }
+
+        .count-box .count-value {
+            color: #c4b5fd;
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        .count-box .count-value .num {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #a78bfa;
+            margin-right: 0.3rem;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .info-table th {
+            color: #a78bfa;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 0.65rem 1rem;
+            background: rgba(167, 139, 250, 0.08);
+            width: 38%;
+        }
+
+        .info-table td {
+            color: #e2e8f0;
+            font-size: 0.93rem;
+            padding: 0.65rem 1rem;
+        }
+
+        .info-table tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .info-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .major-badge {
+            display: inline-block;
+            padding: 3px 14px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: rgba(139, 92, 246, 0.25);
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            color: #c4b5fd;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 2.2rem;
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.25s;
+            box-shadow: 0 4px 18px rgba(124, 58, 237, 0.45);
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(124, 58, 237, 0.65);
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <span class="success-icon">🎉</span>
+        <h1>Đăng Ký Thành Công!</h1>
+
+        <!-- Thông báo cảm ơn -->
+        <div class="result-msg" id="resultMsg">Đang tải...</div>
+
+        <!-- Số lượng SV cùng ngành -->
+        <div class="count-box" id="countBox">
+            <div class="count-label">📊 Số lượng SV đã đăng ký ngành giống bạn</div>
+            <div class="count-value" id="countValue">
+                <span class="num" id="countNum">—</span> sinh viên
+            </div>
+        </div>
+
+        <!-- Bảng thông tin -->
+        <table class="info-table">
+            <tbody>
+                <tr>
+                    <th>MSSV</th>
+                    <td id="tdMSSV">—</td>
+                </tr>
+                <tr>
+                    <th>Họ và Tên</th>
+                    <td id="tdHoTen">—</td>
+                </tr>
+                <tr>
+                    <th>Điểm Trung Bình</th>
+                    <td id="tdDiemTB">—</td>
+                </tr>
+                <tr>
+                    <th>Chuyên Ngành</th>
+                    <td id="tdChuyenNganh">—</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr class="divider">
+
+        <a href="/Student/" class="btn-back">← Đăng Ký Lại</a>
+    </div>
+</div>
+
+<script>
+(function () {
+    const params = new URLSearchParams(window.location.search);
+
+    const mssv         = params.get('mssv')         || '';
+    const hoten        = params.get('hoten')        || '';
+    const diemtb       = params.get('diemtb')       || '';
+    const chuyennganh  = params.get('chuyennganh')  || '';
+    const soLuong      = params.get('soLuong')      || '0';
+
+    // Hiển thị thông báo cảm ơn theo yêu cầu đề bài
+    document.getElementById('resultMsg').innerHTML =
+        `Cảm ơn bạn <span class="highlight">${escHtml(mssv)}</span> - ` +
+        `<span class="highlight">${escHtml(hoten)}</span> đã đăng ký chuyên ngành ` +
+        `<span class="highlight">${escHtml(chuyennganh)}</span>`;
+
+    // Hiển thị số lượng SV cùng ngành
+    document.getElementById('countNum').textContent = soLuong;
+
+    // Bảng thông tin
+    document.getElementById('tdMSSV').textContent      = mssv;
+    document.getElementById('tdHoTen').textContent     = hoten;
+    document.getElementById('tdDiemTB').textContent    = diemtb ? diemtb + ' / 10' : '—';
+    document.getElementById('tdChuyenNganh').innerHTML =
+        `<span class="major-badge">${escHtml(chuyennganh)}</span>`;
+
+    function escHtml(str) {
+        return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+})();
+</script>
+</body>
+</html>
