@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TodoList</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="header">
+    <h1>📋 Ứng dụng TodoList</h1>
+  </div>
+
+  <div class="container">
+
+    <!-- TRANG: Danh sách -->
+    <div id="page-list" class="page active">
+      <div class="top-bar">
+        <h2 class="page-title">Danh sách công việc</h2>
+        <button class="btn btn-primary" onclick="showPage('page-add')">+ Tạo mới công việc</button>
+      </div>
+
+      <div class="filter-bar">
+        <input type="text" id="search-input" class="search-input" placeholder="Tìm kiếm công việc..." oninput="renderList()" />
+        <select id="filter-status" onchange="renderList()">
+          <option value="all">Tất cả</option>
+          <option value="done">Đã hoàn thành</option>
+          <option value="todo">Chưa hoàn thành</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:80px">Mã công việc</th>
+              <th>Tên công việc</th>
+              <th style="width:180px">Trạng thái hoàn thành</th>
+              <th style="width:200px">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="todo-tbody"></tbody>
+        </table>
+        <div id="empty-msg" class="empty-msg hidden">Chưa có công việc nào.</div>
+      </div>
+    </div>
+
+    <!-- TRANG: Thêm -->
+    <div id="page-add" class="page">
+      <h2 class="page-title">Thêm công việc</h2>
+      <div class="form-card">
+        <div class="form-group">
+          <label for="add-id">Mã công việc</label>
+          <input type="number" id="add-id" readonly />
+        </div>
+        <div class="form-group">
+          <label for="add-name">Tên công việc</label>
+          <input type="text" id="add-name" placeholder="Nhập tên công việc..." />
+        </div>
+        <div class="form-group">
+          <div class="checkbox-row">
+            <input type="checkbox" id="add-done" />
+            <label for="add-done">Trạng thái hoàn thành</label>
+          </div>
+        </div>
+        <div>
+          <button class="btn btn-primary" onclick="addTodo()">Thêm</button>
+          <button class="btn btn-secondary" onclick="showPage('page-list')">Quay trở lại</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRANG: Sửa -->
+    <div id="page-edit" class="page">
+      <h2 class="page-title">Sửa công việc</h2>
+      <div class="form-card">
+        <div class="form-group">
+          <label for="edit-id">Mã công việc</label>
+          <input type="number" id="edit-id" readonly />
+        </div>
+        <div class="form-group">
+          <label for="edit-name">Tên công việc</label>
+          <input type="text" id="edit-name" />
+        </div>
+        <div class="form-group">
+          <div class="checkbox-row">
+            <input type="checkbox" id="edit-done" />
+            <label for="edit-done">Trạng thái hoàn thành</label>
+          </div>
+        </div>
+        <div>
+          <button class="btn btn-warning" onclick="saveTodo()">Sửa</button>
+          <button class="btn btn-secondary" onclick="showPage('page-list')">Quay trở lại</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRANG: Chi tiết -->
+    <div id="page-detail" class="page">
+      <h2 class="page-title">Chi tiết công việc</h2>
+      <div class="detail-card">
+        <div class="detail-row">
+          <span class="detail-label">Mã công việc</span>
+          <span class="detail-value" id="detail-id"></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Tên công việc</span>
+          <span class="detail-value" id="detail-name"></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Trạng thái</span>
+          <span class="detail-value" id="detail-done"></span>
+        </div>
+        <div style="margin-top:18px">
+          <button class="btn btn-warning" id="detail-edit-btn">Sửa</button>
+          <button class="btn btn-secondary" onclick="showPage('page-list')">Quay trở lại</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Modal xoá -->
+  <div id="delete-modal" class="modal-overlay hidden">
+    <div class="modal">
+      <h2>Xác nhận xoá</h2>
+      <p>Bạn có chắc muốn xoá công việc <strong id="modal-task-name"></strong>?</p>
+      <div>
+        <button class="btn btn-danger" id="confirm-delete-btn">Xoá</button>
+        <button class="btn btn-secondary" onclick="closeModal()">Huỷ</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
