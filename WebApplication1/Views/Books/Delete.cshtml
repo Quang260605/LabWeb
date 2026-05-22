@@ -1,0 +1,26 @@
+@model WebApplication1.Models.Book
+@{
+    ViewData["Title"] = "Xóa sách";
+}
+
+<h2 class="mt-4 text-danger">Xóa sách</h2>
+<h3>Bạn có chắc chắn muốn xóa cuốn sách này?</h3>
+<hr />
+<div>
+    <dl class="row bg-light p-4 rounded shadow-sm border">
+        <dt class="col-sm-3">Tiêu đề</dt>
+        <dd class="col-sm-9 fw-bold">@Model.Title</dd>
+        
+        <dt class="col-sm-3">Tác giả</dt>
+        <dd class="col-sm-9">@Model.Author</dd>
+        
+        <dt class="col-sm-3">Giá bán</dt>
+        <dd class="col-sm-9 text-danger fw-bold">@Model.Price.ToString("N0") đ</dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="BookId" />
+        <input type="submit" value="Xác nhận Xóa" class="btn btn-danger px-4" />
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary ms-2 px-4">Hủy / Quay lại</a>
+    </form>
+</div>

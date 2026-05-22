@@ -1,0 +1,5 @@
+// This file is required for EF Core to work with SQL Server
+// Install these packages via NuGet:
+// - Microsoft.EntityFrameworkCore.SqlServer
+// - Microsoft.EntityFrameworkCore.Tools
+// - Microsoft.EntityFrameworkCore.Design

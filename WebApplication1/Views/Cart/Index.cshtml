@@ -1,0 +1,61 @@
+@model List<WebApplication1.Models.CartItem>
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    decimal total = 0;
+}
+
+<h2 class="mt-4">Giỏ hàng của bạn</h2>
+<hr />
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info">Giỏ hàng của bạn đang trống. <a asp-controller="Home" asp-action="Index">Tiếp tục mua sắm</a>.</div>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Hình ảnh</th>
+                <th>Tên sách</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var lineTotal = item.Book.Price * item.Quantity;
+                total += lineTotal;
+                <tr>
+                    <td class="text-center">
+                        @if(!string.IsNullOrEmpty(item.Book.Image)){
+                            <img src="~/Content/ImageBooks/@item.Book.Image" alt="@item.Book.Title" style="width: 50px; height: 50px; object-fit: contain;" />
+                        }
+                    </td>
+                    <td>@item.Book.Title</td>
+                    <td>@item.Book.Price.ToString("N0") đ</td>
+                    <td>@item.Quantity</td>
+                    <td class="fw-bold text-danger">@lineTotal.ToString("N0") đ</td>
+                    <td class="text-center">
+                        <a asp-controller="Cart" asp-action="RemoveFromCart" asp-route-id="@item.Book.BookId" class="btn btn-sm btn-danger">Xóa</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-end fw-bold">Tổng cộng:</td>
+                <td class="fw-bold text-danger">@total.ToString("N0") đ</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+    
+    <div class="d-flex justify-content-between mt-4">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Tiếp tục mua sắm</a>
+        <button class="btn btn-success">Thanh toán</button>
+    </div>
+}

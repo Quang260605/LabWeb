@@ -1,0 +1,63 @@
+@model IEnumerable<WebApplication1.Models.Book>
+@{
+    ViewData["Title"] = "Trang Chủ";
+    var categories = ViewBag.Categories as List<WebApplication1.Models.Category>;
+}
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <h4>Chủ đề</h4>
+        <ul class="list-group">
+            @if (categories != null)
+            {
+                foreach (var cat in categories)
+                {
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <a asp-action="Index" asp-route-categoryId="@cat.CategoryId" class="text-decoration-none text-dark">@cat.CategoryName</a>
+                        <span class="text-muted">(@(cat.Books?.Count ?? 0))</span>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+
+    <div class="col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">Thêm mới</h4>
+            <a asp-controller="Books" asp-action="Create" class="btn btn-sm btn-primary">Thêm sách</a>
+        </div>
+        
+        <div class="row">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            @if (!string.IsNullOrEmpty(item.Image))
+                            {
+                                <img src="~/Content/ImageBooks/@item.Image" class="card-img-top" alt="@item.Title" style="height: 220px; object-fit: contain; padding: 10px;">
+                            }
+                            else
+                            {
+                                <div class="card-img-top bg-light text-center py-5" style="height: 220px;">No Image</div>
+                            }
+                            <div class="card-body">
+                                <h6 class="card-title fw-bold">@item.Title</h6>
+                                <p class="card-text text-muted mb-1"><small>Tác giả: @item.Author</small></p>
+                                <p class="card-text text-muted"><small>Thể loại: @item.Category?.CategoryName</small></p>
+                            </div>
+                            <div class="card-footer bg-white border-top-0 d-flex justify-content-between">
+                                <a asp-controller="Books" asp-action="Details" asp-route-id="@item.BookId" class="btn btn-sm btn-outline-info">Chi tiết</a>
+                                <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@item.BookId" />
+                                    <button type="submit" class="btn btn-sm btn-success"><i class="bi bi-cart-plus"></i> Chọn Mua</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

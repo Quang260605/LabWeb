@@ -1,0 +1,57 @@
+@model WebApplication1.Models.Book
+@{
+    ViewData["Title"] = "Thêm sách mới";
+}
+
+<h2 class="mt-4">Thêm sách mới</h2>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="Title" class="control-label fw-bold">Tiêu đề</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="Author" class="control-label fw-bold">Tác giả</label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="Price" class="control-label fw-bold">Giá bán</label>
+                <input asp-for="Price" class="form-control" type="number" step="1000" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="CategoryId" class="control-label fw-bold">Chủ đề</label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+            </div>
+            
+            <div class="form-group mb-3">
+                <label class="control-label fw-bold">Mô tả</label>
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group mb-4">
+                <label class="control-label fw-bold">Hình ảnh bìa</label>
+                <input type="file" name="imageFile" class="form-control" accept="image/*" />
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Lưu thông tin" class="btn btn-primary" />
+                <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Quay lại Trang chủ</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

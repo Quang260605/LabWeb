@@ -1,0 +1,103 @@
+@model WebApplication1.Models.Book
+@{
+    ViewData["Title"] = "Chi tiết sách";
+}
+
+<div class="container mt-4 bg-white p-4 rounded shadow-sm border">
+    <div class="row">
+        <!-- Left: Image -->
+        <div class="col-md-4 text-center">
+            @if (!string.IsNullOrEmpty(Model.Image))
+            {
+                <img src="~/Content/ImageBooks/@Model.Image" alt="@Model.Title" class="img-fluid rounded" style="max-height: 400px; object-fit: contain;">
+            }
+            else
+            {
+                <div class="bg-light d-flex align-items-center justify-content-center border rounded" style="height: 400px; width: 100%;">
+                    <span class="text-muted">Chưa có hình ảnh</span>
+                </div>
+            }
+        </div>
+
+        <!-- Right: Details -->
+        <div class="col-md-8 ps-md-5">
+            <h3 class="fw-bold mb-3 text-dark">@Model.Title</h3>
+            
+            <div class="row mb-3 text-sm">
+                <div class="col-md-6">
+                    <p class="mb-1">Nhà cung cấp: <strong class="text-primary">NXB Trẻ</strong></p>
+                    <p class="mb-1">Nhà xuất bản: <strong class="text-dark">NXB Trẻ</strong></p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-1">Tác giả: <strong class="text-dark">@Model.Author</strong></p>
+                </div>
+            </div>
+            
+            <div class="d-flex align-items-center mb-4">
+                <div class="text-warning me-2" style="font-size: 1.2rem;">
+                    ★★★★★
+                </div>
+                <span class="text-warning">(79 đánh giá)</span>
+            </div>
+
+            <div class="d-flex align-items-end mb-4 p-3 bg-light rounded">
+                <h2 class="text-danger fw-bold me-3 mb-0">@(Model.Price.ToString("N0")) đ</h2>
+                <span class="text-decoration-line-through text-muted me-2" style="font-size: 1.1rem;">@((Model.Price * 1.3m).ToString("N0")) đ</span>
+                <span class="badge bg-danger">-23%</span>
+            </div>
+
+            <div class="mb-4">
+                <div class="row mb-2">
+                    <div class="col-sm-4 text-muted">Thời gian giao hàng</div>
+                    <div class="col-sm-8">Giao hàng đến <strong class="text-primary cursor-pointer">Thay đổi</strong></div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-sm-4 text-muted">Chính sách đổi trả</div>
+                    <div class="col-sm-8">Đổi trả sản phẩm trong 30 ngày <a href="#" class="text-primary text-decoration-none">Xem thêm</a></div>
+                </div>
+                <div class="row mt-4 align-items-center">
+                    <div class="col-sm-4 fw-bold">Số lượng:</div>
+                    <div class="col-sm-4">
+                        <div class="input-group input-group-sm">
+                            <button class="btn btn-outline-secondary px-3" type="button">-</button>
+                            <input type="text" class="form-control text-center fw-bold" value="1">
+                            <button class="btn btn-outline-secondary px-3" type="button">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex gap-3 mt-5">
+                <button class="btn btn-outline-danger px-4 py-2 fw-bold text-uppercase d-flex align-items-center justify-content-center" style="border-width: 2px; width: 48%;">
+                    <span class="fs-4 me-2">🛒</span> Thêm vào giỏ hàng
+                </button>
+                <button class="btn btn-danger px-4 py-2 fw-bold text-uppercase" style="width: 48%;">Mua ngay</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-5 pt-4 border-top">
+        <div class="col-12">
+            <h5 class="fw-bold mb-4">THÔNG TIN CHI TIẾT SÁCH</h5>
+            <div class="text-muted" style="line-height: 1.8;">
+                @if(!string.IsNullOrEmpty(Model.Description))
+                {
+                    @Html.Raw(Model.Description.Replace("\n", "<br/>"))
+                }
+                else
+                {
+                    <p>Đang cập nhật mô tả...</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4 mb-5">
+    <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-inline">
+        <input type="hidden" name="id" value="@Model.BookId" />
+        <button type="submit" class="btn btn-success"><i class="bi bi-cart-plus"></i> Thêm vào giỏ</button>
+    </form>
+    <a asp-action="Edit" asp-route-id="@Model?.BookId" class="btn btn-primary">Chỉnh sửa</a> |
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</div>
